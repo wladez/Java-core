@@ -1,5 +1,8 @@
 package homework.intro;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 
 /**

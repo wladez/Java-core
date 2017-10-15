@@ -3,6 +3,8 @@
  */
 package homework.intro;
 
+import lombok.Data;
+
 public class Ex2Intro {
     public static void main(String[] args)
     {
