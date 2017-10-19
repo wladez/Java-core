@@ -11,6 +11,7 @@
     <modules>
         <module>intro</module>
         <module>oop</module>
+        <module>strings</module>
     </modules>
 
     <dependencies>
