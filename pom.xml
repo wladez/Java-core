@@ -13,6 +13,7 @@
         <module>oop</module>
         <module>strings</module>
         <module>io</module>
+        <module>exceptions</module>
     </modules>
 
     <dependencies>
