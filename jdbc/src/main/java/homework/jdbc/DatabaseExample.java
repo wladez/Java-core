@@ -10,8 +10,8 @@ public class DatabaseExample {
     public static void main(String[] args) throws ClassNotFoundException {
         Class.forName("org.h2.Driver");
         String url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
-        try(Connection con = DriverManager.getConnection(url)) {
-            Statement st = con.createStatement();
+        try(Connection con = DriverManager.getConnection(url);
+            Statement st = con.createStatement()) {
 
             st.execute(initDatabase());
 
@@ -25,15 +25,16 @@ public class DatabaseExample {
             printStudentTable(st);
 
             System.out.println("\nSingle SELECT\n");
-            ResultSet rs = st.executeQuery(
-                    "SELECT id,first_name, last_name, dob, telephone FROM Student WHERE last_name='Igorev'");
-            while (rs.next()) {
-                System.out.printf("%d %s %s %tD %s%n",
-                        rs.getInt("id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getDate("dob"),
-                        rs.getString("telephone"));
+            try(ResultSet rs = st.executeQuery(
+                    "SELECT id,first_name, last_name, dob, telephone FROM Student WHERE last_name='Igorev'")) {
+                while (rs.next()) {
+                    System.out.printf("%d %s %s %tD %s%n",
+                            rs.getInt("id"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            rs.getDate("dob"),
+                            rs.getString("telephone"));
+                }
             }
 
             st.executeUpdate("INSERT INTO Student (first_name, last_name, dob, telephone) " +
@@ -70,15 +71,16 @@ public class DatabaseExample {
         return initSql.toString();
     }
 
-    private static void printStudentTable(Statement st) throws SQLException{
-        ResultSet rs = st.executeQuery("SELECT id, first_name, last_name, dob, telephone FROM Student");
-        while (rs.next()) {
-            System.out.printf("%d %s %s %tD %s%n",
-                    rs.getInt("id"),
-                    rs.getString("first_name"),
-                    rs.getString("last_name"),
-                    rs.getDate("dob"),
-                    rs.getString("telephone"));
+    private static void printStudentTable(Statement st) throws SQLException {
+        try (ResultSet rs = st.executeQuery("SELECT id, first_name, last_name, dob, telephone FROM Student")) {
+            while (rs.next()) {
+                System.out.printf("%d %s %s %tD %s%n",
+                        rs.getInt("id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getDate("dob"),
+                        rs.getString("telephone"));
+            }
         }
     }
 
