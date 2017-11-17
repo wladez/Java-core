@@ -47,7 +47,6 @@ public class DatabaseExample {
             st.executeUpdate("DROP TABLE Temp");
             System.out.println("\nAfter deleting Temp table\n");
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,12 +83,13 @@ public class DatabaseExample {
         }
     }
 
-    private static void printTempTable(Statement st) throws SQLException{
-        ResultSet rs = st.executeQuery("SELECT id,name FROM Temp");
-        while (rs.next()){
-            System.out.printf("%d %s%n",
-                    rs.getInt("id"),
-                    rs.getString("name"));
+    private static void printTempTable(Statement st) throws SQLException {
+        try (ResultSet rs = st.executeQuery("SELECT id,name FROM Temp")) {
+            while (rs.next()) {
+                System.out.printf("%d %s%n",
+                        rs.getInt("id"),
+                        rs.getString("name"));
+            }
         }
     }
 }
